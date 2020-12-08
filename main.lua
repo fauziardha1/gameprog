@@ -1,6 +1,7 @@
  
 Class = require 'class' 
 require 'Ball'
+require 'Paddle'
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
 VIRTUAL_WIDTH = WINDOW_WIDTH
