@@ -5,8 +5,8 @@ require 'Paddle'
 require 'Brick'
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
-VIRTUAL_WIDTH = WINDOW_WIDTH
-VIRTUAL_HEIGHT = WINDOW_HEIGHT 
+VIRTUAL_WIDTH = 800
+VIRTUAL_HEIGHT = 600 
 
 function love.load()
     love.window.setMode(800, 600, {resizable=false, vsync=false, minwidth=VIRTUAL_WIDTH, minheight=VIRTUAL_HEIGHT})
