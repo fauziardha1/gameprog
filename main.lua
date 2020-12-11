@@ -2,6 +2,7 @@
 Class = require 'class' 
 require 'Ball'
 require 'Paddle'
+require 'Brick'
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
 VIRTUAL_WIDTH = WINDOW_WIDTH
@@ -15,10 +16,13 @@ function love.load()
  
      
     ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 20, 20)
+     Paddle:load()
+     Brick:load()
 	gameState = 'start'
 end
 
 function love.update(dt)
+    Paddle:update(dt)
     if gameState == 'serve' then 
 
         ball.dx = math.random(-50, 50)
@@ -84,6 +88,8 @@ function love.draw()
     love.graphics.clear(40/255, 45/255, 52/255, 255/255) 
     
     ball:render() 
+    Paddle:draw()
+    Brick:draw()
 end
 
 function displayFPS()

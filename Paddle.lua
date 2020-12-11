@@ -2,7 +2,7 @@ Paddle = {}
 
 function Paddle:load()
     self.x = love.graphics.getWidth()/2
-    self.y = WINDOW_HEIGHT - 170
+    self.y = WINDOW_HEIGHT -30
     self.width = 100
     self.height = 20
     self.speed = 500

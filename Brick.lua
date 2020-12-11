@@ -1,4 +1,6 @@
-function love.load()
+Brick = {}
+
+function Brick:load()
     gBricks = {
         [0]= love.graphics.newImage("assets/box0.png"),
         [1]= love.graphics.newImage("assets/box1.png"),
@@ -70,7 +72,7 @@ function bricksGenap(col,posisi_y)
 end
 
 
-function love.draw()
+function Brick:draw()
     for i=1,6 do
         for col=1,5 do
             if i%2==0 then
