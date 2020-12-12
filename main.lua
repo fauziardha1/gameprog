@@ -1,4 +1,3 @@
- 
 Class = require 'class' 
 require 'Ball'
 require 'Paddle'
@@ -7,39 +6,52 @@ WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
 VIRTUAL_WIDTH = 800
 VIRTUAL_HEIGHT = 600 
+ball_width = 20
 
 function love.load()
-    love.window.setMode(800, 600, {resizable=false, vsync=false, minwidth=VIRTUAL_WIDTH, minheight=VIRTUAL_HEIGHT})
+    love.window.setMode(800, 600)
     love.window.setTitle('BreakIT')
     math.randomseed(os.time())
     ballSkin = love.graphics.newImage("/assets/ball.png")
  
      
-    ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 20, 20)
-     Paddle:load()
-     Brick:load()
+    ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, ball_width, ball_width)
+    paddle = Paddle() 
+    brick = Brick()
 	gameState = 'start'
 end
 
-function love.update(dt)
-    Paddle:update(dt)
+function love.update(dt) 
     if gameState == 'serve' then 
 
         ball.dx = math.random(-50, 50)
-        if servingPlayer == 1 then
-            ball.dy = math.random(140, 200)
-        else
-            ball.dy = -math.random(140, 200)
+        
+    elseif gameState == 'play' then  
+        -- collution of ball and paddle
+        if ball:collides(brick.gBricks[0]) then
+            ball.dy = -ball.dy * 1.0
+            ball.y = paddle.y - ball_width
+
+            if ball.dx < 0 then
+                ball.dx = -math.random(10, 150)
+            else
+                ball.dx = math.random(10, 150)
+            end
         end
-    elseif gameState == 'play' then
-          
+
+        -- print(brick.gBricks)
+
+    -- TODO : detect bricks collution over ball
+    --        change ball direction
+    --        destroy particular bricks
+
         if ball.y <= 0 then
             ball.y = 0
             ball.dy = -ball.dy
         end
 
-        if ball.y >= VIRTUAL_HEIGHT - 4 then
-            ball.y = VIRTUAL_HEIGHT - 4
+        if ball.y >= VIRTUAL_HEIGHT - ball_width then
+            ball.y = VIRTUAL_HEIGHT - ball_width
             ball.dy = -ball.dy
         end
 
@@ -48,16 +60,19 @@ function love.update(dt)
             ball.dx = -ball.dx
         end
 
-        if ball.x >= VIRTUAL_WIDTH - 4 then
-            ball.x = VIRTUAL_WIDTH - 4
+        if ball.x >= VIRTUAL_WIDTH - ball_width then
+            ball.x = VIRTUAL_WIDTH - ball_width
             ball.dx = -ball.dx
         end
 			 
 	end
-  
+    
+    -- simulate update update
     if gameState == 'play' then
         ball:update(dt)
 	end
+    paddle:update(dt)
+     
      
 end
 
@@ -88,8 +103,8 @@ function love.draw()
     love.graphics.clear(40/255, 45/255, 52/255, 255/255) 
     
     ball:render() 
-    Paddle:draw()
-    Brick:draw()
+    paddle:render()
+    brick:render()
 end
 
 function displayFPS()

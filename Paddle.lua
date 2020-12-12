@@ -1,6 +1,6 @@
-Paddle = {}
+Paddle = Class{}
 
-function Paddle:load()
+function Paddle:init()
     self.x = love.graphics.getWidth()/2
     self.y = WINDOW_HEIGHT -30
     self.width = 100
@@ -17,11 +17,11 @@ function Paddle:update(dt)
    if self.x < 0 then
    	self.x = 0
    elseif self.x + self.width > love.graphics.getWidth() then
-   	self.x = love.graphics.getWidth() - self.width
+   	self.x = love.graphics.getWidth() - self.width 
    end
 end
 
-function Paddle:draw()
+function Paddle:render()
     love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
 end
  

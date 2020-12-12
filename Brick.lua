@@ -1,6 +1,7 @@
-Brick = {}
+Brick = Class{}
 
-function Brick:load()
+function Brick:init()
+
     gBricks = {
         [0]= love.graphics.newImage("assets/box0.png"),
         [1]= love.graphics.newImage("assets/box1.png"),
@@ -27,10 +28,12 @@ function Brick:load()
     rotasiBricks = 0
     posisiAwal_x = widthBricks
     posisiAwal_y = 60
+    brickList ={}
     
 end 
 function bricksGanjil(col,posisi_y)
-    love.graphics.draw(
+
+     love.graphics.draw(
             gBricks[col],
             posisiAwal_x+(col-1)*2*widthBricks,
             posisi_y,
@@ -48,6 +51,8 @@ function bricksGanjil(col,posisi_y)
                 skalaBricks --skala y
             )
         end
+
+         
 end
 
 function bricksGenap(col,posisi_y)
@@ -72,7 +77,7 @@ function bricksGenap(col,posisi_y)
 end
 
 
-function Brick:draw()
+function Brick:render()
     for i=1,6 do
         for col=1,5 do
             if i%2==0 then

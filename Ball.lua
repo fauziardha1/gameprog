@@ -10,10 +10,10 @@ function Ball:init(x, y, width, height)
 end
 
 function Ball:collides(paddle)
-    if self.x > paddle.x + paddle.width or paddle.x > self.x + self.width then
+    if self.x > paddle.x + paddle.width or paddle.x > self.x + self.width then 
         return false
     end
-    if self.y > paddle.y + paddle.height or paddle.y > self.y + self.height then
+    if self.y > paddle.y + paddle.height or paddle.y > self.y + self.height then 
         return false
     end 
     return true
@@ -34,6 +34,7 @@ function Ball:update(dt)
      
 end
 
+-- Function to gee Scale Dimansion of new Image
 function getImageScaleForNewDimensions( image, newWidth, newHeight )
     local currentWidth, currentHeight = image:getDimensions()
     return ( newWidth / currentWidth ), ( newHeight / currentHeight )
