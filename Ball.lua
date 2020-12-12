@@ -34,6 +34,28 @@ function Ball:update(dt)
      
 end
 
+function Ball:mantul()
+    if ball.y <= 0 then
+        ball.y = 0
+        ball.dy = -ball.dy
+    end
+
+    if ball.y >= VIRTUAL_HEIGHT - ball_width then
+        ball.y = VIRTUAL_HEIGHT - ball_width
+        ball.dy = -ball.dy
+    end
+
+    if ball.x <= 0 then
+        ball.x = 0
+        ball.dx = -ball.dx
+    end
+
+    if ball.x >= VIRTUAL_WIDTH - ball_width then
+        ball.x = VIRTUAL_WIDTH - ball_width
+        ball.dx = -ball.dx
+    end
+end
+
 -- Function to gee Scale Dimansion of new Image
 function getImageScaleForNewDimensions( image, newWidth, newHeight )
     local currentWidth, currentHeight = image:getDimensions()

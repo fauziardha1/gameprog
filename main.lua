@@ -28,7 +28,7 @@ function love.update(dt)
         
     elseif gameState == 'play' then  
         -- collution of ball and paddle
-        if ball:collides(brick.gBricks[0]) then
+        if ball:collides(paddle) then
             ball.dy = -ball.dy * 1.0
             ball.y = paddle.y - ball_width
 
@@ -38,32 +38,13 @@ function love.update(dt)
                 ball.dx = math.random(10, 150)
             end
         end
-
-        -- print(brick.gBricks)
+ 
 
     -- TODO : detect bricks collution over ball
     --        change ball direction
     --        destroy particular bricks
 
-        if ball.y <= 0 then
-            ball.y = 0
-            ball.dy = -ball.dy
-        end
-
-        if ball.y >= VIRTUAL_HEIGHT - ball_width then
-            ball.y = VIRTUAL_HEIGHT - ball_width
-            ball.dy = -ball.dy
-        end
-
-        if ball.x <= 0 then
-            ball.x = 0
-            ball.dx = -ball.dx
-        end
-
-        if ball.x >= VIRTUAL_WIDTH - ball_width then
-            ball.x = VIRTUAL_WIDTH - ball_width
-            ball.dx = -ball.dx
-        end
+       ball:mantul()
 			 
 	end
     
