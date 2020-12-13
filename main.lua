@@ -2,6 +2,9 @@ Class = require 'class'
 require 'Ball'
 require 'Paddle'
 require 'Brick'
+require 'Mainmenu'
+require 'Gameover'
+
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
 VIRTUAL_WIDTH = 800
@@ -13,8 +16,10 @@ function love.load()
     love.window.setTitle('BreakIT')
     math.randomseed(os.time())
     ballSkin = love.graphics.newImage("/assets/ball.png")
+    background = love.graphics.newImage("/assets/Background.jpg")
+    love.graphics.setDefaultFilter('nearest', 'nearest')
+    mediumFont = love.graphics.newFont("/assets/flappy.ttf", 20)
  
-     
     ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, ball_width, ball_width)
     paddle = Paddle() 
     brick = Brick()
@@ -91,10 +96,16 @@ end
 function love.draw()
     
     love.graphics.clear(40/255, 45/255, 52/255, 255/255) 
+    love.graphics.draw(background, 0, 0)
+    love.graphics.setFont(mediumFont)
+    love.graphics.printf('Score : ', 20, 20, VIRTUAL_WIDTH, 'left')
+    love.graphics.printf('0', 100, 20, VIRTUAL_WIDTH, 'left')
     
     ball:render() 
     paddle:render()
     brick:render()
+    -- Mainmenu:render()
+    Gameover:render()
 end
 
 function displayFPS()
