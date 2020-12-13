@@ -18,7 +18,7 @@ function love.load()
     ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, ball_width, ball_width)
     paddle = Paddle() 
     brick = Brick()
-	gameState = 'start'
+    gameState = 'start'
 end
 
 function love.update(dt) 
