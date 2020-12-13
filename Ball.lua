@@ -27,9 +27,7 @@ function Ball:collidesWithBrick(brick)
         return false
     end 
     return true
-end
-
-
+end 
 
 function Ball:reset()
     self.x = VIRTUAL_WIDTH / 2 - self.width/2
@@ -40,9 +38,7 @@ end
 
 function Ball:update(dt)
     self.x = self.x + 2*self.dx * dt
-    self.y = self.y + 2*self.dy * dt
-  
-     
+    self.y = self.y + 2*self.dy * dt 
 end
 
 function Ball:bounce()
@@ -73,9 +69,7 @@ end
 function getImageScaleForNewDimensions( image, newWidth, newHeight )
     local currentWidth, currentHeight = image:getDimensions()
     return ( newWidth / currentWidth ), ( newHeight / currentHeight )
-end
-
- 
+end 
 
 function Ball:render() 
     local scaleX, scaleY = getImageScaleForNewDimensions( ballSkin, self.width, self.height )

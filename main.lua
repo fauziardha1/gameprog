@@ -25,9 +25,7 @@ function love.load()
     loadBricks()
 
     score = 0
-    gameState = 'start'
-
-    
+    gameState = 'start' 
 end
 
 function love.update(dt) 
@@ -103,8 +101,7 @@ function love.draw()
         renderAllBricks() 
     end
     
-end
-
+end 
 
 function renderAllBricks()
     for k,v in pairs(listOfBricks) do 
