@@ -22,6 +22,8 @@ function Paddle:update(dt)
 end
 
 function Paddle:render()
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+    rounded = 3
+    love.graphics.setLineWidth(rounded )
+    love.graphics.rectangle("line", self.x, self.y, self.width, self.height,rounded,rounded)
 end
  
