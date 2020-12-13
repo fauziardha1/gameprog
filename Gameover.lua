@@ -8,14 +8,14 @@ end
 
 function Mainmenu:update()
 
- end
+end
  
-function Gameover:render()
+function Gameover:render(score)
 
     love.graphics.setFont(mediumFont)
     love.graphics.printf('Game Over', 0, 250, VIRTUAL_WIDTH, 'center')
     love.graphics.printf('Your Score :', 0, 300, VIRTUAL_WIDTH, 'center')
-    love.graphics.printf('0', 80, 300, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf(score, 80, 300, VIRTUAL_WIDTH, 'center')
     
 
 end

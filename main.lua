@@ -18,12 +18,16 @@ function love.load()
     ballSkin = love.graphics.newImage("/assets/ball.png")
     background = love.graphics.newImage("/assets/Background.jpg")
     love.graphics.setDefaultFilter('nearest', 'nearest')
-    mediumFont = love.graphics.newFont("/assets/flappy.ttf", 20)
- 
+    mediumFont = love.graphics.newFont("/assets/flappy.ttf", 20) 
+
     ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, ball_width, ball_width)
-    paddle = Paddle() 
-    brick = Brick()
+    paddle = Paddle()  
+    loadBricks()
+
+    score = 0
     gameState = 'start'
+
+    
 end
 
 function love.update(dt) 
@@ -41,27 +45,14 @@ function love.update(dt)
                 ball.dx = -math.random(10, 150)
             else
                 ball.dx = math.random(10, 150)
-            end
-        elseif ball:collidesWithBrick(brick) then
-            ball.dy = -ball.dy * 1.0
-            ball.y = brick.y - ball_width
-        elseif ball:collidesWithBrick(brick) then
-            ball.dy = -ball.dy * 1.0
-            ball.y = Brick.y- ball_width
-            if ball.dx < 0 then
-                ball.dx = -math.random(10, 150)
-            else
-                ball.dx = math.random(10, 150)
-            end
-        end
+            end 
 
- 
+        else 
+            -- collution ball and bricks
+            checkBallCollidesWithBricks()   
+        end 
 
-    -- TODO : detect bricks collution over ball
-    --        change ball direction
-    --        destroy particular bricks
-
-       ball:mantul()
+       ball:bounce()
 			 
 	end
     
@@ -85,36 +76,80 @@ function love.keypressed(key)
         elseif gameState == 'done' then
             gameState = 'serve'
             ball:reset()
-            player1Score = 0
-            player2Score = 0
-            if winningPlayer == 1 then
-                servingPlayer = 2
-            else
-                servingPlayer = 1
-            end
+            loadBricks()
+            renderAllBricks()
+
+        end
+    end
+    if key == 'delete' then 
+        gameState = 'done'
+    end
+end
+
+function love.draw() 
+    love.graphics.clear(40/255, 45/255, 52/255, 255/255) 
+    love.graphics.draw(background, 0, 0)
+    love.graphics.setFont(mediumFont) 
+    
+    if gameState == 'start' then
+        Mainmenu:render()
+    elseif gameState == 'done' then
+        Gameover:render(score)
+    else 
+        love.graphics.printf('Score : ', 20, 20, VIRTUAL_WIDTH, 'left')
+        love.graphics.printf(score, 100, 20, VIRTUAL_WIDTH, 'left')
+        ball:render() 
+        paddle:render() 
+        renderAllBricks() 
+    end
+    
+end
+
+
+function renderAllBricks()
+    for k,v in pairs(listOfBricks) do 
+            v:render() 
+    end
+end
+
+function loadBricks()  
+    
+    allImage = getAllImage() -- get all image
+
+    listOfBricks = {} -- create empty tabel for alot of brick
+    bricksWidth = allImage[0]:getWidth()/4 + 10 
+    bricksHeight = allImage[0]:getHeight()/4 +5
+    start_x = bricksWidth -- starting x coordinate to draw brick
+    start_y = 60          -- starting y coordinate to draw brick
+ 
+    --  generate 60  bricks and load it to table before
+    for i = 1, 60 do 
+        listOfBricks[i] = Brick(allImage[math.random (0, 14)],start_x,start_y)
+        start_x = start_x + bricksWidth
+
+        if i%10 == 0 then 
+            start_y = start_y + bricksHeight
+            start_x = bricksWidth
+        end  
+    end
+
+end
+
+-- funtion to check collution between ball and brick
+function checkBallCollidesWithBricks()
+    for k,v in pairs(listOfBricks) do
+        if ball:collidesWithBrick(v) and v.isShows then 
+            ball.dy = -ball.dy 
+            ball.dx = -math.random(10, 150)  
+            
+            -- hide the brick
+            v.isShows = false
+
+            incrementScore()
         end
     end
 end
 
-function love.draw()
-    
-    love.graphics.clear(40/255, 45/255, 52/255, 255/255) 
-    love.graphics.draw(background, 0, 0)
-    love.graphics.setFont(mediumFont)
-    love.graphics.printf('Score : ', 20, 20, VIRTUAL_WIDTH, 'left')
-    love.graphics.printf('0', 100, 20, VIRTUAL_WIDTH, 'left')
-    
-    ball:render() 
-    paddle:render()
-    brick:render()
-    -- Mainmenu:render()
-    Gameover:render()
-end
-
--- function displayFPS()
-     
--- end
- 
--- function displayScore()
-    
--- end
+function incrementScore()
+    score = score + 1
+end 

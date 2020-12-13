@@ -45,15 +45,16 @@ function Ball:update(dt)
      
 end
 
-function Ball:mantul()
+function Ball:bounce()
     if ball.y <= 0 then
         ball.y = 0
         ball.dy = -ball.dy
     end
 
     if ball.y >= VIRTUAL_HEIGHT - ball_width then
-        ball.y = VIRTUAL_HEIGHT - ball_width
-        ball.dy = -ball.dy
+        -- ball.y = VIRTUAL_HEIGHT - ball_width
+        -- ball.dy = -ball.dy
+        gameState = 'done'
     end
 
     if ball.x <= 0 then
@@ -64,10 +65,11 @@ function Ball:mantul()
     if ball.x >= VIRTUAL_WIDTH - ball_width then
         ball.x = VIRTUAL_WIDTH - ball_width
         ball.dx = -ball.dx
+        
     end
 end
 
--- Function to gee Scale Dimansion of new Image
+-- Function to get Scale Dimansion of new Image
 function getImageScaleForNewDimensions( image, newWidth, newHeight )
     local currentWidth, currentHeight = image:getDimensions()
     return ( newWidth / currentWidth ), ( newHeight / currentHeight )
