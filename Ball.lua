@@ -19,6 +19,17 @@ function Ball:collides(paddle)
     return true
 end
 
+function Ball:collides(brick)
+    if self.x > brick.x + brick.widthBricks or brick.x > self.x + self.width then 
+        return false
+    end
+    if self.y > brick.y + brick.heightBricks or brick.y > self.y + self.height then 
+        return false
+    end 
+    return true
+end
+
+
 
 function Ball:reset()
     self.x = VIRTUAL_WIDTH / 2 - self.width/2
