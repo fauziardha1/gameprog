@@ -42,9 +42,15 @@ function love.update(dt)
             else
                 ball.dx = math.random(10, 150)
             end
+<<<<<<< Updated upstream
         elseif ball:collides(brick) then
             ball.dy = -ball.dy * 1.0
             ball.y = brick.y - ball_width
+=======
+        elseif ball:collides(Brick) then
+            ball.dy = -ball.dy * 1.0
+            ball.y = Brick.y- ball_width
+>>>>>>> Stashed changes
             if ball.dx < 0 then
                 ball.dx = -math.random(10, 150)
             else
@@ -108,10 +114,10 @@ function love.draw()
     Gameover:render()
 end
 
-function displayFPS()
+-- function displayFPS()
      
-end
+-- end
  
-function displayScore()
+-- function displayScore()
     
-end
+-- end
