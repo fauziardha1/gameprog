@@ -37,7 +37,16 @@ function love.update(dt)
             else
                 ball.dx = math.random(10, 150)
             end
+        elseif ball:collides(brick) then
+            ball.dy = -ball.dy * 1.0
+            ball.y = brick.y - ball_width
+            if ball.dx < 0 then
+                ball.dx = -math.random(10, 150)
+            else
+                ball.dx = math.random(10, 150)
+            end
         end
+
  
 
     -- TODO : detect bricks collution over ball

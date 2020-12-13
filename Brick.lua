@@ -2,7 +2,7 @@ Brick = Class{}
 
 function Brick:init()
 
-    gBricks = {
+    self.gBricks = {
         [0]= love.graphics.newImage("assets/box0.png"),
         [1]= love.graphics.newImage("assets/box1.png"),
         [2]= love.graphics.newImage("assets/box2.png"),
@@ -22,69 +22,24 @@ function Brick:init()
     -- tinggi dan lebar brick dikecilin jadi setengah dan ditambah gap 5
     
     gapBricks = 5
-    heightBricks = gBricks[0]:getHeight()/4 + gapBricks
-    widthBricks = gBricks[0]:getWidth()/4 + gapBricks
+    self.heightBricks = gBricks[0]:getHeight()/4 + gapBricks
+    self.widthBricks = gBricks[0]:getWidth()/4 + gapBricks
     skalaBricks = 0.25
     rotasiBricks = 0
-    posisiAwal_x = widthBricks
-    posisiAwal_y = 60
-    brickList ={}
+    self.x = self.widthBricks
+    self.y = 60
     
 end 
-function bricksGanjil(col,posisi_y)
 
-     love.graphics.draw(
-            gBricks[col],
-            posisiAwal_x+(col-1)*2*widthBricks,
-            posisi_y,
-            rotasiBricks,
-            skalaBricks,--skala x
-            skalaBricks --skala y
-        )
-        if col<7 then
-            love.graphics.draw(
-                gBricks[0],
-                posisiAwal_x + (2*col-1)*widthBricks,
-                posisi_y,
-                rotasiBricks,
-                skalaBricks,--skala x
-                skalaBricks --skala y
-            )
-        end
-
-         
-end
-
-function bricksGenap(col,posisi_y)
-    love.graphics.draw(
-            gBricks[0],
-            posisiAwal_x+(col-1)*2*widthBricks,
-            posisi_y,
-            rotasiBricks,
-            skalaBricks,--skala x
-            skalaBricks --skala y
-        )
-        if col<7 then
-            love.graphics.draw(
-                gBricks[14-col],
-                posisiAwal_x + (2*col-1)*widthBricks,
-                posisi_y,
-                rotasiBricks,
-                skalaBricks,--skala x
-                skalaBricks --skala y
-            )
-        end
-end
 
 
 function Brick:render()
-    for i=1,6 do
-        for col=1,5 do
-            if i%2==0 then
-                bricksGenap(col,posisiAwal_y+ (i-1)*heightBricks)
-            else
-                bricksGanjil(col,posisiAwal_y+ (i-1)*heightBricks)
-            end
-        end
-    end
+    love.graphics.draw(
+        self.gBricks[0],
+        self.x,
+        self.y,
+        rotasiBricks,
+        skalaBricks,
+        skalaBricks
+    )
 end
