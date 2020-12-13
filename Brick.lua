@@ -22,13 +22,8 @@ function Brick:init()
     -- tinggi dan lebar brick dikecilin jadi setengah dan ditambah gap 5
     
     gapBricks = 5
-<<<<<<< Updated upstream
-    self.heightBricks = gBricks[0]:getHeight()/4 + gapBricks
-    self.widthBricks = gBricks[0]:getWidth()/4 + gapBricks
-=======
     self.heightBricks = self.gBricks[0]:getHeight()/4 + gapBricks
     self.widthBricks = self.gBricks[0]:getWidth()/4 + gapBricks
->>>>>>> Stashed changes
     skalaBricks = 0.25
     rotasiBricks = 0
     self.x = self.widthBricks
