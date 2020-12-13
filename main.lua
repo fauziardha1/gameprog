@@ -42,10 +42,10 @@ function love.update(dt)
             else
                 ball.dx = math.random(10, 150)
             end
-        elseif ball:collides(brick) then
+        elseif ball:collidesWithBrick(brick) then
             ball.dy = -ball.dy * 1.0
             ball.y = brick.y - ball_width
-        elseif ball:collides(brick) then
+        elseif ball:collidesWithBrick(brick) then
             ball.dy = -ball.dy * 1.0
             ball.y = Brick.y- ball_width
             if ball.dx < 0 then

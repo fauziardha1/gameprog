@@ -19,7 +19,7 @@ function Ball:collides(paddle)
     return true
 end
 
-function Ball:collides(brick)
+function Ball:collidesWithBrick(brick)
     if self.x > brick.x + brick.widthBricks or brick.x > self.x + self.width then 
         return false
     end
