@@ -16,7 +16,7 @@ function Ball:collides(paddle)
     if self.y > paddle.y + paddle.height or paddle.y > self.y + self.height then 
         return false
     end 
-    
+
     return true
 end
 
@@ -48,6 +48,7 @@ function Ball:bounce()
         ball.y = 0
         ball.dy = -ball.dy
         sounds['mantul']:play()
+        
     end
 
     if ball.y >= VIRTUAL_HEIGHT - ball_width then 

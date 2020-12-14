@@ -61,7 +61,7 @@ function love.update(dt)
         sounds['music']:play()
         ball:update(dt)
         paddle:update(dt) 
-        
+
         if ball:collides(paddle) then
             ball.dy = -ball.dy * 1.0
             ball.y = paddle.y - ball_width
@@ -120,16 +120,8 @@ function love.draw()
     if gameState == 'start' then
         mainMenu:home() 
     elseif gameState == 'done' then
-        isWin = checkIsWin()
-        
-        if isWin then 
-            sounds['menang1']:play()
-            sounds['menang2']:play()
-        else
-            sounds['gameover']:play() 
-        end
-        
-        Gameover:render(score,isWin)
+        sounds['gameover']:play()
+        Gameover:render(score)
         sounds['music']:stop()
     elseif gameState == 'serve' then
         mainMenu:render()
