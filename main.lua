@@ -2,7 +2,7 @@ Class = require 'class'
 require 'Ball'
 require 'Paddle'
 require 'Brick'
-require 'Mainmenu'
+require 'MainMenu'
 require 'Gameover'
 
 WINDOW_WIDTH = 800
@@ -13,13 +13,14 @@ ball_width = 20
 
 function love.load()
     love.window.setMode(800, 600)
-    love.window.setTitle('BreakIT')
+    love.window.setTitle('Break Out')
     math.randomseed(os.time())
     ballSkin = love.graphics.newImage("/assets/ball.png")
     background = love.graphics.newImage("/assets/Background.jpg")
     love.graphics.setDefaultFilter('nearest', 'nearest')
-    mediumFont = love.graphics.newFont("/assets/flappy.ttf", 20) 
+    mediumFont = love.graphics.newFont("/assets/breakout.ttf", 20) 
 
+    mainMenu = MainMenu()
     ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, ball_width, ball_width)
     paddle = Paddle()  
     loadBricks()
@@ -29,11 +30,16 @@ function love.load()
 end
 
 function love.update(dt) 
-    if gameState == 'serve' then 
+    if gameState == 'start' then
+        mainMenu:update(dt)
+
+    elseif gameState == 'serve' then 
 
         ball.dx = math.random(-50, 50)
         
     elseif gameState == 'play' then  
+        ball:update(dt)
+        paddle:update(dt)
         -- collution of ball and paddle
         if ball:collides(paddle) then
             ball.dy = -ball.dy * 1.0
@@ -52,14 +58,7 @@ function love.update(dt)
 
        ball:bounce()
 			 
-	end
-    
-    -- simulate update update
-    if gameState == 'play' then
-        ball:update(dt)
-	end
-    paddle:update(dt)
-     
+	end 
      
 end
 
@@ -67,9 +66,7 @@ function love.keypressed(key)
     if key == 'escape' then
         love.event.quit()
     elseif key == 'enter' or key == 'return' then
-        if gameState == 'start' then
-            gameState = 'serve'
-        elseif gameState == 'serve' then
+        if gameState == 'serve' then
             gameState = 'play'
         elseif gameState == 'done' then
             gameState = 'serve'
@@ -90,18 +87,25 @@ function love.draw()
     love.graphics.setFont(mediumFont) 
     
     if gameState == 'start' then
-        Mainmenu:render()
+        mainMenu:home() 
     elseif gameState == 'done' then
         Gameover:render(score)
+    elseif gameState == 'serve' then
+        mainMenu:render()
+        loadMainGameView()
     else 
-        love.graphics.printf('Score : ', 20, 20, VIRTUAL_WIDTH, 'left')
-        love.graphics.printf(score, 100, 20, VIRTUAL_WIDTH, 'left')
-        ball:render() 
-        paddle:render() 
-        renderAllBricks() 
+        loadMainGameView()
     end
     
 end 
+
+function loadMainGameView()
+    love.graphics.printf('Score : ', 20, 20, VIRTUAL_WIDTH, 'left')
+    love.graphics.printf(score, 100, 20, VIRTUAL_WIDTH, 'left')
+    ball:render() 
+    paddle:render() 
+    renderAllBricks() 
+end
 
 function renderAllBricks()
     for k,v in pairs(listOfBricks) do 

@@ -6,7 +6,7 @@ function Gameover:init()
     mediumFont = love.graphics.newFont("/assets/flappy.ttf", 20)
 end
 
-function Mainmenu:update()
+function Gameover:update()
 
 end
  
