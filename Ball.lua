@@ -16,6 +16,7 @@ function Ball:collides(paddle)
     if self.y > paddle.y + paddle.height or paddle.y > self.y + self.height then 
         return false
     end 
+    
     return true
 end
 
@@ -26,6 +27,7 @@ function Ball:collidesWithBrick(brick)
     if self.y > brick.y + brick.heightBricks or brick.y > self.y + self.height then 
         return false
     end 
+    
     return true
 end 
 

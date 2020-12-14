@@ -19,6 +19,17 @@ function love.load()
     background = love.graphics.newImage("/assets/Background.jpg")
     love.graphics.setDefaultFilter('nearest', 'nearest')
     mediumFont = love.graphics.newFont("/assets/breakout.ttf", 20) 
+    sounds = {
+        ['home'] = love.audio.newSource('/sounds/home.mp3', 'static'),
+        ['cursor'] = love.audio.newSource('/sounds/cursor3.wav', 'static'),
+        ['start'] = love.audio.newSource('/sounds/start.mp3', 'static'),
+        ['break_hit'] = love.audio.newSource('/sounds/break_hit.mp3', 'static'),
+        ['music'] = love.audio.newSource('/sounds/music.mp3', 'static'),
+        ['mantul'] = love.audio.newSource('/sounds/mantul.mp3', 'static'),
+        ['gameover'] = love.audio.newSource('/sounds/gameover.wav', 'static'),
+    }
+    sounds['home']:setLooping(true)
+    sounds['home']:play()
 
     mainMenu = MainMenu()
     ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, ball_width, ball_width)
@@ -50,16 +61,17 @@ function love.update(dt)
             else
                 ball.dx = math.random(10, 150)
             end 
-
+            sounds['mantul']:play()
         else 
             -- collution ball and bricks
-            checkBallCollidesWithBricks()   
+            checkBallCollidesWithBricks()
+             
         end 
-
+        
        ball:bounce()
 			 
-	end 
-     
+    end 
+      
 end
 
 function love.keypressed(key)
@@ -68,6 +80,7 @@ function love.keypressed(key)
     elseif key == 'enter' or key == 'return' then
         if gameState == 'serve' then
             gameState = 'play'
+            sounds['start']:play()
         elseif gameState == 'done' then
             gameState = 'serve'
             ball:reset()
@@ -89,10 +102,14 @@ function love.draw()
     if gameState == 'start' then
         mainMenu:home() 
     elseif gameState == 'done' then
+        sounds['gameover']:play(1)
         Gameover:render(score)
+        sounds['music']:stop()
     elseif gameState == 'serve' then
         mainMenu:render()
         loadMainGameView()
+        sounds['music']:setLooping(true)
+        sounds['music']:play()
     else 
         loadMainGameView()
     end
@@ -105,6 +122,7 @@ function loadMainGameView()
     ball:render() 
     paddle:render() 
     renderAllBricks() 
+    
 end
 
 function renderAllBricks()
@@ -145,7 +163,7 @@ function checkBallCollidesWithBricks()
             
             -- hide the brick
             v.isShows = false
-
+            sounds['break_hit']:play() 
             incrementScore()
         end
     end
