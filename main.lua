@@ -62,6 +62,12 @@ function love.update(dt)
         ball:update(dt)
         paddle:update(dt) 
 
+        isWin = checkIsWin()
+
+        if isWin then 
+            gameState = 'done'
+        end
+
         if ball:collides(paddle) then
             ball.dy = -ball.dy * 1.0
             ball.y = paddle.y - ball_width
@@ -99,9 +105,14 @@ function love.keypressed(key)
             gameState = 'serve'
             isPause = false
             score = 0
+            time = 120
             ball:reset()
             loadBricks()
             renderAllBricks() 
+
+            sounds["menang1"]:stop()
+            sounds["menang2"]:stop()
+            sounds["gameover"]:stop()
         end
     end
     if key == 'space' then
@@ -119,16 +130,14 @@ function love.draw()
     
     if gameState == 'start' then
         mainMenu:home() 
-    elseif gameState == 'done' then
-        sounds['gameover']:play()
-        Gameover:render(score)
+    elseif gameState == 'done' then 
+        Gameover:render(score,isWin)
         sounds['music']:stop()
     elseif gameState == 'serve' then
         mainMenu:render()
-        loadMainGameView()
-         
-            sounds['music']:setLooping(true)
-            sounds['music']:play()
+        loadMainGameView() 
+        sounds['music']:setLooping(true)
+        sounds['music']:play()
         
     else 
         loadMainGameView()
@@ -166,7 +175,7 @@ function loadBricks()
     start_y = 60          -- starting y coordinate to draw brick
  
     --  generate 60  bricks and load it to table before
-    for i = 1, 60 do 
+    for i = 1, 6 do 
         listOfBricks[i] = Brick(allImage[math.random (0, 14)],start_x,start_y)
         start_x = start_x + bricksWidth
 
