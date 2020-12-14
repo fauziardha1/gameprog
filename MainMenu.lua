@@ -23,8 +23,10 @@ end
 function MainMenu:update()
     if love.keyboard.isDown("left") then
        self.cursor_now = self.cursor_x1
+       sounds['cursor']:play()
     elseif love.keyboard.isDown("right") then
         self.cursor_now = self.cursor_x2
+        sounds['cursor']:play()
     end
     if love.keyboard.isDown("kpenter") or love.keyboard.isDown("return") then
        if self.cursor_now == self.cursor_x1 then  

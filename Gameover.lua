@@ -7,7 +7,7 @@ function Gameover:init()
 end
  
  
-function Gameover:render(score) 
+function Gameover:render(score,isWin) 
     gameOverFont = love.graphics.newFont("/assets/space.ttf", 20)
     love.graphics.setFont(gameOverFont)
     love.graphics.printf('Game Over', 0, 250, VIRTUAL_WIDTH, 'center')

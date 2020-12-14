@@ -16,6 +16,7 @@ function Ball:collides(paddle)
     if self.y > paddle.y + paddle.height or paddle.y > self.y + self.height then 
         return false
     end 
+    
     return true
 end
 
@@ -26,6 +27,7 @@ function Ball:collidesWithBrick(brick)
     if self.y > brick.y + brick.heightBricks or brick.y > self.y + self.height then 
         return false
     end 
+    
     return true
 end 
 
@@ -45,23 +47,23 @@ function Ball:bounce()
     if ball.y <= 0 then
         ball.y = 0
         ball.dy = -ball.dy
+        sounds['mantul']:play()
     end
 
-    if ball.y >= VIRTUAL_HEIGHT - ball_width then
-        -- ball.y = VIRTUAL_HEIGHT - ball_width
-        -- ball.dy = -ball.dy
+    if ball.y >= VIRTUAL_HEIGHT - ball_width then 
         gameState = 'done'
     end
 
     if ball.x <= 0 then
         ball.x = 0
         ball.dx = -ball.dx
+        sounds['mantul']:play()
     end
 
     if ball.x >= VIRTUAL_WIDTH - ball_width then
         ball.x = VIRTUAL_WIDTH - ball_width
         ball.dx = -ball.dx
-        
+        sounds['mantul']:play()
     end
 end
 
