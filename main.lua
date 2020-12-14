@@ -102,7 +102,7 @@ function love.draw()
     if gameState == 'start' then
         mainMenu:home() 
     elseif gameState == 'done' then
-        sounds['gameover']:play(1)
+        sounds['gameover']:play()
         Gameover:render(score)
         sounds['music']:stop()
     elseif gameState == 'serve' then
