@@ -9,7 +9,7 @@ end
 function MainMenu:home()
     background = love.graphics.newImage("/assets/Background.jpg")
     love.graphics.setDefaultFilter('nearest', 'nearest')
-    semiLargeFont = love.graphics.newFont("/assets/breakout.ttf", 30)
+    semiLargeFont = love.graphics.newFont("/assets/space.ttf", 30)
     homeLogo = love.graphics.newImage("assets/logo.png")
     love.graphics.draw( homeLogo,100, 100, 0, 0.75, 0.75)
 
@@ -27,11 +27,9 @@ function MainMenu:update()
         self.cursor_now = self.cursor_x2
     end
     if love.keyboard.isDown("kpenter") or love.keyboard.isDown("return") then
-       if self.cursor_now == self.cursor_x1 then 
-            print("Enter : Cursor now = "..self.cursor_now)
+       if self.cursor_now == self.cursor_x1 then  
             gameState = 'serve'
-       else
-            print("Quit now!")
+       else 
             love.event.quit()
        end
     end 

@@ -4,6 +4,7 @@ require 'Paddle'
 require 'Brick'
 require 'MainMenu'
 require 'Gameover'
+require 'Pause'
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
@@ -18,13 +19,14 @@ function love.load()
     ballSkin = love.graphics.newImage("/assets/ball.png")
     background = love.graphics.newImage("/assets/Background.jpg")
     love.graphics.setDefaultFilter('nearest', 'nearest')
-    mediumFont = love.graphics.newFont("/assets/breakout.ttf", 20) 
+    mediumFont = love.graphics.newFont("/assets/assistant.ttf", 20) 
 
     mainMenu = MainMenu()
     ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, ball_width, ball_width)
     paddle = Paddle()  
     loadBricks()
 
+    isPause = false
     score = 0
     gameState = 'start' 
 end
@@ -37,7 +39,7 @@ function love.update(dt)
 
         ball.dx = math.random(-50, 50)
         
-    elseif gameState == 'play' then  
+    elseif gameState == 'play' and not(isPause) then  
         ball:update(dt)
         paddle:update(dt)
         -- collution of ball and paddle
@@ -70,11 +72,15 @@ function love.keypressed(key)
             gameState = 'play'
         elseif gameState == 'done' then
             gameState = 'serve'
+            isPause = false
+            score = 0
             ball:reset()
             loadBricks()
-            renderAllBricks()
-
+            renderAllBricks() 
         end
+    end
+    if key == 'space' then
+        isPause = not(isPause)
     end
     if key == 'delete' then 
         gameState = 'done'
@@ -101,10 +107,13 @@ end
 
 function loadMainGameView()
     love.graphics.printf('Score : ', 20, 20, VIRTUAL_WIDTH, 'left')
-    love.graphics.printf(score, 100, 20, VIRTUAL_WIDTH, 'left')
+    love.graphics.printf(score, 40, 45, VIRTUAL_WIDTH, 'left')
     ball:render() 
     paddle:render() 
     renderAllBricks() 
+    if isPause then
+        Pause:render()
+    end
 end
 
 function renderAllBricks()
