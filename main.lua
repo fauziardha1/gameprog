@@ -40,7 +40,7 @@ function love.load()
     loadBricks()
 
     isPause = false
-    time = 120
+    time = 180
     isWin = false
     score = 0
     gameState = 'start' 
@@ -105,7 +105,7 @@ function love.keypressed(key)
             gameState = 'serve'
             isPause = false
             score = 0
-            time = 120
+            time = 180
             ball:reset()
             loadBricks()
             renderAllBricks() 
@@ -175,7 +175,7 @@ function loadBricks()
     start_y = 60          -- starting y coordinate to draw brick
  
     --  generate 60  bricks and load it to table before
-    for i = 1, 6 do 
+    for i = 1, 60 do 
         listOfBricks[i] = Brick(allImage[math.random (0, 14)],start_x,start_y)
         start_x = start_x + bricksWidth
 
